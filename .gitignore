@@ -99,3 +99,11 @@ ENV/
 
 # mypy
 .mypy_cache/
+*.pyc
+pip-selfcheck.json
+bin
+lib
+lib64
+include
+man
+.Python
