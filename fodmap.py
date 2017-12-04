@@ -4,6 +4,8 @@ import os
 import sys
 import yaml
 import logging
+import itertools
+
 from flask import Flask
 from flask_ask import Ask, statement, question, session
 
@@ -50,10 +52,20 @@ def intent_help():
     return statement(help_msg).simple_card('fodmapHelpIntent', help_msg)
 
 @ask.intent('fodmapCheckIntent',
-        mapping={'food': 'Food', 'category': 'Category'},
-        default={'food': '', 'category': 'General'}
+        mapping={
+            'food1': 'FoodFirst',
+            'food2': 'FoodSecond',
+            'food3': 'FoodThird',
+            'category': 'Category'
+        },
+        mapping={
+            'food1': '',
+            'food2': '',
+            'food3': '',
+            'category': 'General'
         )
-def intent_check(food, category):
+def intent_check(food1, food2, food3, category):
+    req_food = "%s %s %s" % (food1, food2, food3)
     err_msg = None
     if food == '':
         err_msg = 'Sorry, I do not know that foodstuff'
@@ -61,15 +73,29 @@ def intent_check(food, category):
     if err_msg:
         return statement(err_msg).simple_card('fodmapCheckIntentError', err_msg)
 
-    if food in FodMap['low_fodmap']:
-        answer_msg = "%s is in the low fodmap category" % (food)
-    elif food in FodMap['high_fodmap']:
-        answer_msg = "%s is clasified as high fodmap" % (food)
+    # create possible questions
+    if is_fodmap(food1, food2, food3, 'low_fodmap'):
+        answer_msg = "%s is in the low fodmap category" % (req_food)
+    elif is_fodmap(food1, food2, food3, 'high_fodmap'):
+        answer_msg = "%s is clasified as high fodmap" % (req_food)
     else:
-        answer_msg = "Sorry but %s is not in lists" % (food)
+        answer_msg = "Sorry but %s is not in my lists" % (req_food)
     logging.debug(answer_msg)
     return statement(answer_msg).simple_card('fodmapCheckIntentReply', answer_msg)
 
+#####
+def build_words(food1, food2, food3):
+    words = []
+    word_list = filter(len, [food1, food2, food3])
+    for p in itertools.permutations(word_list):
+        words.append(" ".join(p))
+    return words
+
+def is_fodmap(food1, food2, food3, l='low_fodmap'):
+    for food in build_words(food1, food2, food3):
+        if food in FodMap[l]:
+            return True
+    return False
 
 if __name__ == '__main__':
     if 'ASK_VERIFY_REQUESTS' in os.environ:
@@ -78,4 +104,4 @@ if __name__ == '__main__':
             app.config['ASK_VERIFY_REQUESTS'] = False
     app.run(debug=DEBUG)
 
-# vim: ts=4 expandtab
+# vim: ts=4 expandtab ft=python

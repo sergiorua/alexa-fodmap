@@ -1,0 +1,28 @@
+{
+  "intents": [
+    {
+      "intent": "fodmapCheckIntent",
+      "slots": [
+        {
+          "name": "FoodFirst",
+          "type": "LIST_OF_FOODS"
+        },
+        {
+          "name": "FoodSecond",
+          "type": "LIST_OF_FOODS"
+        },
+        {
+          "name": "FoodThird",
+          "type": "LIST_OF_FOODS"
+        },
+        {
+          "name": "Category",
+          "type": "AMAZON.LITERAL"
+        }
+    },
+    {
+      "intent": "fodmapHelpIntent"
+    }
+  ]
+}
+
