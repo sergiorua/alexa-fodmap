@@ -1,11 +1,13 @@
 #!/usr/bin/env python
 
 import os
+import sys
+import yaml
 import logging
 from flask import Flask
 from flask_ask import Ask, statement, question, session
 
-DEBUG = False
+DEBUG = True
 Version = '1.0.0'
 app = Flask(__name__)
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = DEBUG
@@ -15,9 +17,16 @@ logging.getLogger('flask_ask').setLevel(logging.DEBUG)
 if DEBUG:
     logging.basicConfig(level=logging.DEBUG,
                     format='%(asctime)s %(levelname)s %(message)s',
-                    filename='/tmp/myapp.log',
+                    filename='/tmp/fodmap.log',
                     filemode='w')
 
+# load fodmap lists
+FodMap = {}
+for l in ['high_fodmap.yaml', 'low_fodmap.yaml']:
+    if os.path.exists(l):
+        with open(l, 'r') as f:
+            name = l.replace('.yaml','')
+            FodMap[name] = yaml.load(f)
 @ask.launch
 def start_skill():
     welcome_message = 'Hello.'
@@ -50,10 +59,16 @@ def intent_check(food, category):
         err_msg = 'Sorry, I do not know that foodstuff'
 
     if err_msg:
-        return statement(err_msg).simple_card('bakeConverterError', err_msg)
+        return statement(err_msg).simple_card('fodmapCheckIntentError', err_msg)
 
+    if food in FodMap['low_fodmap']:
+        answer_msg = "%s is in the low fodmap category" % (food)
+    elif food in FodMap['high_fodmap']:
+        answer_msg = "%s is clasified as high fodmap" % (food)
+    else:
+        answer_msg = "Sorry but %s is not in lists" % (food)
     logging.debug(answer_msg)
-    return statement(answer_msg).simple_card('bakeConverterReply', answer_msg)
+    return statement(answer_msg).simple_card('fodmapCheckIntentReply', answer_msg)
 
 
 if __name__ == '__main__':
