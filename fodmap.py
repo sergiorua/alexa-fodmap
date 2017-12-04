@@ -80,7 +80,7 @@ def intent_check(food1, food2, food3, grade, category):
     if is_fodmap(food1, food2, food3, 'low'):
         answer_msg = "%s is in the low fodmap category" % (req_food)
     elif is_fodmap(food1, food2, food3, 'high'):
-        answer_msg = "%s is clasified as high fodmap" % (req_food)
+        answer_msg = "%s is classified as high fodmap" % (req_food)
     else:
         answer_msg = "Sorry but %s is not in my lists" % (req_food)
 
