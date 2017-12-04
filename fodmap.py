@@ -27,8 +27,10 @@ FodMap = {}
 for l in ['high_fodmap.yaml', 'low_fodmap.yaml']:
     if os.path.exists(l):
         with open(l, 'r') as f:
-            name = l.replace('.yaml','')
+            name = l.replace('_fodmap.yaml','')
             FodMap[name] = yaml.load(f)
+
+
 @ask.launch
 def start_skill():
     welcome_message = 'Hello.'
@@ -56,30 +58,32 @@ def intent_help():
             'food1': 'FoodFirst',
             'food2': 'FoodSecond',
             'food3': 'FoodThird',
+            'grade': 'Grade',
             'category': 'Category'
         },
-        mapping={
+        default={
             'food1': '',
             'food2': '',
             'food3': '',
+            'grade': '',
             'category': 'General'
-        )
-def intent_check(food1, food2, food3, category):
+            })
+def intent_check(food1, food2, food3, grade, category):
     req_food = "%s %s %s" % (food1, food2, food3)
     err_msg = None
-    if food == '':
+    if req_food == '' or len(req_food) < 2:
         err_msg = 'Sorry, I do not know that foodstuff'
 
     if err_msg:
         return statement(err_msg).simple_card('fodmapCheckIntentError', err_msg)
 
-    # create possible questions
-    if is_fodmap(food1, food2, food3, 'low_fodmap'):
+    if is_fodmap(food1, food2, food3, 'low'):
         answer_msg = "%s is in the low fodmap category" % (req_food)
-    elif is_fodmap(food1, food2, food3, 'high_fodmap'):
+    elif is_fodmap(food1, food2, food3, 'high'):
         answer_msg = "%s is clasified as high fodmap" % (req_food)
     else:
         answer_msg = "Sorry but %s is not in my lists" % (req_food)
+
     logging.debug(answer_msg)
     return statement(answer_msg).simple_card('fodmapCheckIntentReply', answer_msg)
 

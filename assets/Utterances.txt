@@ -1,0 +1,15 @@
+fodmapCheckIntent is {FoodFirst} fodmap
+fodmapCheckIntent is {FoodFirst} {FoodSecond} fodmap
+fodmapCheckIntent is {FoodFirst} {FoodSecond} {FoodThird} fodmap
+
+fodmapCheckIntent is {FoodFirst} {Grade} fodmap
+fodmapCheckIntent is {FoodFirst} {FoodSecond} {Grade} fodmap
+fodmapCheckIntent is {FoodFirst} {FoodSecond} {FoodThird} {Grade} fodmap
+
+fodmapCheckIntent are {FoodFirst} fodmap
+fodmapCheckIntent are {FoodFirst} {FoodSecond} fodmap
+fodmapCheckIntent are {FoodFirst} {FoodSecond} {FoodThird} fodmap
+
+fodmapCheckIntent are {FoodFirst} {Grade} fodmap
+fodmapCheckIntent are {FoodFirst} {FoodSecond} {Grade} fodmap
+fodmapCheckIntent are {FoodFirst} {FoodSecond} {FoodThird} {Grade} fodmap
