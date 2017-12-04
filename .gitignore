@@ -107,3 +107,4 @@ lib64
 include
 man
 .Python
+.DS_Store

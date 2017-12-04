@@ -33,7 +33,7 @@ for l in ['high_fodmap.yaml', 'low_fodmap.yaml']:
 
 @ask.launch
 def start_skill():
-    welcome_message = 'Hello.'
+    welcome_message = 'To check the FODMAP database just ask, for example, if carrots are fodmap.'
     return statement(welcome_message)
 
 @ask.intent('AMAZON.StopIntent')
@@ -50,7 +50,7 @@ def session_ended():
 
 @ask.intent('fodmapHelpIntent')
 def intent_help():
-    help_msg = 'Are carrots low fodmap?'
+    help_msg = 'For example, ask me: are carrots low fodmap?'
     return statement(help_msg).simple_card('fodmapHelpIntent', help_msg)
 
 @ask.intent('fodmapCheckIntent',
