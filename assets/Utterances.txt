@@ -18,6 +18,18 @@ fodmapCheckIntent check if {FoodFirst} is {Grade} fodmap
 fodmapCheckIntent check if {FoodFirst} {FoodSecond} is {Grade} fodmap
 fodmapCheckIntent check if {FoodFirst} {FoodSecond} {FoodThird} is {Grade} fodmap
 
+fodmapCheckIntent check if {FoodFirst} are {Grade} fodmap
+fodmapCheckIntent check if {FoodFirst} {FoodSecond} are {Grade} fodmap
+fodmapCheckIntent check if {FoodFirst} {FoodSecond} {FoodThird} are {Grade} fodmap
+
+fodmapCheckIntent check if {FoodFirst} are fodmap
+fodmapCheckIntent check if {FoodFirst} {FoodSecond} are fodmap
+fodmapCheckIntent check if {FoodFirst} {FoodSecond} {FoodThird} are fodmap
+
+fodmapCheckIntent check if {FoodFirst} is fodmap
+fodmapCheckIntent check if {FoodFirst} {FoodSecond} is fodmap
+fodmapCheckIntent check if {FoodFirst} {FoodSecond} {FoodThird} is fodmap
+
 fodmapCheckIntent if {FoodFirst} is {Grade} fodmap
 fodmapCheckIntent if {FoodFirst} {FoodSecond} is {Grade} fodmap
 fodmapCheckIntent if {FoodFirst} {FoodSecond} {FoodThird} is {Grade} fodmap

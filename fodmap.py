@@ -92,7 +92,7 @@ def build_words(food1, food2, food3):
     words = []
     word_list = filter(len, [food1, food2, food3])
     for p in itertools.permutations(word_list):
-        words.append(" ".join(p))
+        words.append(" ".join(p).lower())
     return words
 
 def is_fodmap(food1, food2, food3, l='low_fodmap'):
