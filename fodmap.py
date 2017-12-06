@@ -47,7 +47,7 @@ def cancel():
 
 @ask.on_session_started
 def new_session():
-    log.info('new session started')
+    logging.info('new session started')
 
 @ask.session_ended
 def session_ended():
@@ -56,7 +56,7 @@ def session_ended():
 @ask.intent('fodmapHelpIntent')
 def intent_help():
     help_msg = 'For example, ask me: are carrots low fodmap?'
-    return statement(help_msg).simple_card('FODMAP Help', help_msg)
+    return question(help_msg).simple_card('FODMAP Help', help_msg)
 
 @ask.intent('fodmapCheckIntent',
         mapping={
