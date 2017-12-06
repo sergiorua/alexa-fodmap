@@ -33,8 +33,9 @@ for l in ['high_fodmap.yaml', 'low_fodmap.yaml']:
 
 @ask.launch
 def start_skill():
-    welcome_message = 'To check the FODMAP database just ask. For example, check if carrots are fodmap.'
-    return statement(welcome_message)
+    welcome_prompt = 'Welcome. Please ask me to check a food by saying, check if broccoli is FODMAP'
+    welcome_reprompt = 'Please ask me to check a food by saying, check if broccoli is FODMAP'
+    return question(welcome_prompt).reprompt(welcome_reprompt).simple_card('FODMAP Welcome', welcome_prompt)
 
 @ask.intent('AMAZON.StopIntent')
 def stop():
@@ -55,7 +56,7 @@ def session_ended():
 @ask.intent('fodmapHelpIntent')
 def intent_help():
     help_msg = 'For example, ask me: are carrots low fodmap?'
-    return statement(help_msg).simple_card('fodmapHelpIntent', help_msg)
+    return statement(help_msg).simple_card('FODMAP Help', help_msg)
 
 @ask.intent('fodmapCheckIntent',
         mapping={
@@ -75,12 +76,13 @@ def intent_help():
 def intent_check(food1, food2, food3, grade, category):
     req_food = "%s %s %s" % (food1, food2, food3)
     req_food = req_food.rstrip(' ')
+    session.attributes['FOOD'] = req_food
     err_msg = None
     if req_food == '' or len(req_food) < 2:
         err_msg = 'Sorry, I do not know that foodstuff'
 
     if err_msg:
-        return statement(err_msg).simple_card('fodmapCheckIntentError', err_msg)
+        return statement(err_msg).simple_card('FODMAP Check', err_msg)
 
     if is_fodmap(food1, food2, food3, 'low'):
         answer_msg = "%s is in the low FODMAP category" % (req_food)
@@ -88,9 +90,11 @@ def intent_check(food1, food2, food3, grade, category):
         answer_msg = "%s is classified as high FODMAP" % (req_food)
     else:
         answer_msg = "Sorry but %s is not in my lists" % (req_food)
+        question_msg = "Would you like to ask me again?"
+        return question(answer_msg).reprompt(question_msg).simple_card('FODMAP Check', answer_msg)
 
     logging.debug(answer_msg)
-    return statement(answer_msg).simple_card('fodmapCheckIntentReply', answer_msg)
+    return statement(answer_msg).simple_card('FODMAP Check', answer_msg)
 
 #####
 def build_words(food1, food2, food3):
