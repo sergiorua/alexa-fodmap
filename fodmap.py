@@ -34,7 +34,7 @@ for l in ['high_fodmap.yaml', 'low_fodmap.yaml']:
 @ask.launch
 def start_skill():
     welcome_message = 'To check the FODMAP database just ask. For example, check if carrots are fodmap.'
-    return question(welcome_message)
+    return statement(welcome_message)
 
 @ask.intent('AMAZON.StopIntent')
 def stop():
