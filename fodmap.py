@@ -33,8 +33,8 @@ for l in ['high_fodmap.yaml', 'low_fodmap.yaml']:
 
 @ask.launch
 def start_skill():
-    welcome_message = 'To check the FODMAP database just ask, for example, if carrots are fodmap.'
-    return statement(welcome_message)
+    welcome_message = 'To check the FODMAP database just ask. For example, check if carrots are fodmap.'
+    return question(welcome_message)
 
 @ask.intent('AMAZON.StopIntent')
 def stop():
@@ -43,6 +43,10 @@ def stop():
 @ask.intent('AMAZON.CancelIntent')
 def cancel():
     return statement("Goodbye")
+
+@ask.on_session_started
+def new_session():
+    log.info('new session started')
 
 @ask.session_ended
 def session_ended():
@@ -70,6 +74,7 @@ def intent_help():
             })
 def intent_check(food1, food2, food3, grade, category):
     req_food = "%s %s %s" % (food1, food2, food3)
+    req_food = req_food.rstrip(' ')
     err_msg = None
     if req_food == '' or len(req_food) < 2:
         err_msg = 'Sorry, I do not know that foodstuff'
@@ -78,9 +83,9 @@ def intent_check(food1, food2, food3, grade, category):
         return statement(err_msg).simple_card('fodmapCheckIntentError', err_msg)
 
     if is_fodmap(food1, food2, food3, 'low'):
-        answer_msg = "%s is in the low fodmap category" % (req_food)
+        answer_msg = "%s is in the low FODMAP category" % (req_food)
     elif is_fodmap(food1, food2, food3, 'high'):
-        answer_msg = "%s is classified as high fodmap" % (req_food)
+        answer_msg = "%s is classified as high FODMAP" % (req_food)
     else:
         answer_msg = "Sorry but %s is not in my lists" % (req_food)
 
