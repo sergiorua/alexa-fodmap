@@ -55,7 +55,7 @@ def session_ended():
 
 @ask.intent('fodmapHelpIntent')
 def intent_help():
-    help_msg = 'For example, ask me: are carrots low fodmap?'
+    help_msg = 'For example, ask me: are carrots fodmap?'
     return question(help_msg).simple_card('FODMAP Help', help_msg)
 
 @ask.intent('fodmapCheckIntent',
