@@ -49,7 +49,7 @@ def new_session():
 
 @ask.session_ended
 def session_ended():
-    return statement("")
+    return '{}', 200
 
 @ask.intent('fodmapHelpIntent')
 def intent_help():
