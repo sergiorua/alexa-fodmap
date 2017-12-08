@@ -22,7 +22,18 @@
         "type": "LIST_OF_CATEGORIES"
       }
     ]
-  }, {
+  }, 
+  {
     "intent": "fodmapHelpIntent"
-  }]
+  },
+  {
+    "intent": "AMAZON.NoIntent"
+  },
+  {
+    "intent": "AMAZON.CancelIntent"
+  },
+  {
+    "intent": "AMAZON.StopIntent"
+  }
+  ]
 }

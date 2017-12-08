@@ -38,10 +38,8 @@ def start_skill():
     return question(welcome_prompt).reprompt(welcome_reprompt).simple_card('FODMAP Welcome', welcome_prompt)
 
 @ask.intent('AMAZON.StopIntent')
-def stop():
-    return statement("Goodbye")
-
 @ask.intent('AMAZON.CancelIntent')
+@ask.intent('AMAZON.NoIntent')
 def cancel():
     return statement("Goodbye")
 
@@ -51,7 +49,7 @@ def new_session():
 
 @ask.session_ended
 def session_ended():
-    return "{}", 200
+    return statement("")
 
 @ask.intent('fodmapHelpIntent')
 def intent_help():
