@@ -88,8 +88,6 @@ def intent_check(food1, food2, food3, grade, category):
         answer_msg = "%s is classified as high FODMAP" % (req_food)
     else:
         answer_msg = "Sorry but %s is not in my lists" % (req_food)
-        question_msg = "Would you like to ask me again?"
-        return question(answer_msg).reprompt(question_msg).simple_card('FODMAP Check', answer_msg)
 
     logging.debug(answer_msg)
     return statement(answer_msg).simple_card('FODMAP Check', answer_msg)
