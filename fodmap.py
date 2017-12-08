@@ -33,6 +33,7 @@ for l in ['high_fodmap.yaml', 'low_fodmap.yaml']:
 
 @ask.launch
 def start_skill():
+    logging.debug(session.attributes.get('request.locale'))
     welcome_prompt = 'Welcome. Please ask me to check a food by saying, check if broccoli is FODMAP'
     welcome_reprompt = 'Please ask me to check a food by saying, check if broccoli is FODMAP'
     return question(welcome_prompt).reprompt(welcome_reprompt).simple_card('FODMAP Welcome', welcome_prompt)

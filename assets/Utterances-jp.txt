@@ -1,0 +1,6 @@
+fodmapCheckIntent {FoodFirst}はfodmap ですか
+fodmapCheckIntent {FoodFirst}は{FoodSecond} fodmap ですか
+fodmapCheckIntent {FoodFirst}は{FoodSecond} {FoodThird} fodmap ですか
+
+fodmapHelpIntent help
+fodmapHelpIntent examples
