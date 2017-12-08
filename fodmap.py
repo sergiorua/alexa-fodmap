@@ -5,6 +5,7 @@ import sys
 import yaml
 import logging
 import itertools
+import inflect
 
 from flask import Flask
 from flask_ask import Ask, statement, question, session
@@ -15,12 +16,17 @@ app = Flask(__name__)
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = DEBUG
 ask = Ask(app, "/")
 logging.getLogger('flask_ask').setLevel(logging.DEBUG)
+inflect = inflect.engine()
 
 if DEBUG:
     logging.basicConfig(level=logging.DEBUG,
                     format='%(asctime)s %(levelname)s %(message)s',
                     filename='/tmp/fodmap.log',
                     filemode='w')
+def is_are(f):
+    if inflect.singular_noun(f):
+        return 'are'
+    return 'is'
 
 # load fodmap lists
 FodMap = {}
@@ -83,11 +89,11 @@ def intent_check(food1, food2, food3, grade, category):
         return statement(err_msg).simple_card('FODMAP Check', err_msg)
 
     if is_fodmap(food1, food2, food3, 'low'):
-        answer_msg = "%s is in the low FODMAP category" % (req_food)
+        answer_msg = "%s %s in the low FODMAP category" % (req_food, is_are(req_food))
     elif is_fodmap(food1, food2, food3, 'high'):
-        answer_msg = "%s is classified as high FODMAP" % (req_food)
+        answer_msg = "%s %s classified as high FODMAP" % (req_food, is_are(req_food))
     else:
-        answer_msg = "Sorry but %s is not in my lists" % (req_food)
+        answer_msg = "Sorry but %s %s not in my lists" % (req_food, is_are(req_food))
 
     logging.debug(answer_msg)
     return statement(answer_msg).simple_card('FODMAP Check', answer_msg)
